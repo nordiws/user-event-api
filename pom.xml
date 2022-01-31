@@ -13,7 +13,7 @@
 	<name>UserEventsAPI</name>
 	<description>User Events API for Dynacurrate backend challenge.</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

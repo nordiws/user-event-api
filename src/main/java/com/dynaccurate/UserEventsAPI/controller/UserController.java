@@ -8,8 +8,11 @@ import com.dynaccurate.UserEventsAPI.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,16 +24,17 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public ResponseEntity<?> getUsers() {
         List<User> userList = userService.getAllUsers();
         return ResponseEntity.ok(userList);
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") String userId) {
         try {
             User user = userService.getUser(userId);
@@ -40,19 +44,19 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "/save")
+    @PostMapping(path = "/save")
     public ResponseEntity<?> saveUser(@RequestBody User user) {
         user = userService.saveUser(user);
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping(path = "/update")
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
-        user = userService.updateUser(user);
+    @PutMapping(path = "/update/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable("id") String userId, @RequestBody User user) {
+        user = userService.updateUser(userId, user);
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping(path = "/delete")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") String userId) {
         try {
             String result = userService.deleteUser(userId);
