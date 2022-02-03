@@ -8,10 +8,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Document(collection = "users")
-public class User {
+@Document(collection = "events")
+public class Event {
     @Id
     private String id;
     private String username;
-    private String registrationDate;
+    private String eventType;
+    private String eventDateTime;
 }
