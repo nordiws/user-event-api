@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
 @Configuration
-public class ApiConfiguration extends AbstractMongoClientConfiguration {
+public class MongoConnectionConf extends AbstractMongoClientConfiguration {
 
     @Autowired
     private Environment env;
