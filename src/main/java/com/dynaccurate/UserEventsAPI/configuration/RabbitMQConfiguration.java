@@ -23,7 +23,7 @@ public class RabbitMQConfiguration {
 
     @Bean
     public Queue queue() {
-        return new Queue(env.getProperty("rabbitmq.queue"));
+        return new Queue(env.getProperty("rabbitmq.queue"), true);
     }
 
     @Bean
@@ -45,6 +45,7 @@ public class RabbitMQConfiguration {
     public AmqpTemplate template(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(converter());
+        rabbitTemplate.setRoutingKey(env.getProperty("rabbitmq.routing_key"));
         return rabbitTemplate;
     }
 }
