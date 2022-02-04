@@ -1,6 +1,6 @@
 package com.dynaccurate.UserEventsAPI.publisher;
 
-import com.dynaccurate.UserEventsAPI.constants.Constants;
+import org.springframework.core.env.Environment;
 import com.dynaccurate.UserEventsAPI.models.Event;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -17,9 +17,13 @@ public class EventPublisher {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private Environment env;
+
     @PostMapping("")
     public String eventMessage(@RequestBody Event event) {
-        rabbitTemplate.convertAndSend(Constants.EXCHANGE, Constants.ROUTING_KEY, event);
+        rabbitTemplate.convertAndSend(env.getProperty("rabbitmq.exchange"), env.getProperty("rabbitmq.routing_key"),
+                event);
         return "Event posted successfully!";
     }
 }
