@@ -1,13 +1,12 @@
 package com.dynaccurate.UserEventsAPI.configuration;
 
-import org.springframework.core.env.Environment;
-
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -20,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfiguration {
 
     @Autowired
-    private Environment env;
 
     @Value("${rabbitmq.queue}")
     String queueName;
@@ -30,6 +28,15 @@ public class RabbitMQConfiguration {
 
     @Value("${rabbitmq.routing_key}")
     String routingKey;
+
+    @Value("${spring.rabbitmq.uri}")
+    String uriString;
+
+    @Value("${spring.rabbitmq.username}")
+    String username;
+
+    @Value("${spring.rabbitmq.password}")
+    String password;
 
     @Bean
     Queue queue() {
@@ -43,12 +50,21 @@ public class RabbitMQConfiguration {
 
     @Bean
     Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(env.getProperty(routingKey));
+        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
     }
 
     @Bean
     public MessageConverter converter() {
         return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    public ConnectionFactory connectionFactory() {
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
+        cachingConnectionFactory.setUri(uriString);
+        cachingConnectionFactory.setUsername(username);
+        cachingConnectionFactory.setPassword(password);
+        return cachingConnectionFactory;
     }
 
     @Bean

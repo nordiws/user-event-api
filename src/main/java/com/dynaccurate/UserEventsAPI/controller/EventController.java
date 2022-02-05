@@ -1,4 +1,4 @@
-package com.dynaccurate.UserEventsAPI.publisher;
+package com.dynaccurate.UserEventsAPI.controller;
 
 import com.dynaccurate.UserEventsAPI.models.Event;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/event")
-public class EventPublisher {
+@RequestMapping("/events")
+public class EventController {
 
     @Value("${rabbitmq.exchange}")
     String exchange;
