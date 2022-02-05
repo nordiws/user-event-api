@@ -5,25 +5,27 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
 @Configuration
 public class MongoConnectionConf extends AbstractMongoClientConfiguration {
 
-    @Autowired
-    private Environment env;
+    @Value("${mongodb.database}")
+    String database;
+
+    @Value("${mongodb.connection.string}")
+    String uriString;
 
     @Override
     protected String getDatabaseName() {
-        return env.getProperty("mongodb.database");
+        return database;
     }
 
     @Override
     public MongoClient mongoClient() {
-        ConnectionString connectionString = new ConnectionString(env.getProperty("mongodb.connection.string"));
+        ConnectionString connectionString = new ConnectionString(uriString);
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
                 .build();

@@ -8,6 +8,7 @@ public class UserEventsApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UserEventsApiApplication.class, args);
+
 	}
 
 }
