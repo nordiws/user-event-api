@@ -33,6 +33,13 @@ public class EventController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @GetMapping("")
+    public List<Event> getEventsByPeriod(@RequestParam(required = false) String fromDate,
+            @RequestParam(required = false) String tillDate) {
+        List<Event> events = eventsService.findAllEventsByPeriod(fromDate, tillDate);
+        return events;
+    }
+
     @GetMapping("/{id}")
     public List<Event> getEventsByUserId(@PathVariable("id") String userId,
             @RequestParam(required = false) String sort) {
@@ -43,13 +50,6 @@ public class EventController {
         }
 
         System.out.println("Retrieved all events by id : " + userId);
-        return events;
-    }
-
-    @GetMapping("")
-    public List<Event> getEventsByPeriod(@RequestParam(required = false) String fromDate,
-            @RequestParam(required = false) String tillDate) {
-        List<Event> events = eventsService.findAllEventsByPeriod(fromDate, tillDate);
         return events;
     }
 
