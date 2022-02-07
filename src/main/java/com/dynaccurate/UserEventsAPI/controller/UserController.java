@@ -30,8 +30,13 @@ public class UserController {
 
     @GetMapping(path = "")
     public ResponseEntity<?> getUsers() {
-        List<User> userList = userService.getAllUsers();
-        return ResponseEntity.ok(userList);
+        try {
+            List<User> userList = userService.getAllUsers();
+            return ResponseEntity.ok(userList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return (ResponseEntity<?>) ResponseEntity.internalServerError();
+        }
     }
 
     @GetMapping(path = "/{id}")

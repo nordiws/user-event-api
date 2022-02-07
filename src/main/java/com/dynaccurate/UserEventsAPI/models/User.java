@@ -1,5 +1,8 @@
 package com.dynaccurate.UserEventsAPI.models;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,4 +19,9 @@ public class User {
     private String username;
     private String registrationDate;
 
+    public User() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        this.registrationDate = localDateTime.format(formatter);
+    }
 }
