@@ -49,23 +49,23 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/save")
+    @PostMapping(path = "")
     public ResponseEntity<?> saveUser(@RequestBody User user) {
         user = userService.saveUser(user);
         return ResponseEntity.ok(user);
     }
 
-    @PutMapping(path = "/update/{id}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") String userId, @RequestBody User user) {
         user = userService.updateUser(userId, user);
         return ResponseEntity.ok(user);
     }
 
-    @DeleteMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") String userId) {
         try {
             String result = userService.deleteUser(userId);
-            return ResponseEntity.ok(result);
+            return ResponseEntity.ok("User deleted! ID: " + result);
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not Found", e);
         }

@@ -53,7 +53,7 @@ public class EventController {
         return events;
     }
 
-    @PostMapping("/save")
+    @PostMapping("")
     public String sendEvent(@RequestBody Event event) {
         try {
             rabbitTemplate.convertAndSend(exchange, routingKey, event);
