@@ -15,7 +15,7 @@ public class MainController {
     public ResponseEntity<?> getMainRoute() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("message", "Welcome to User Event API");
-        jsonObject.put("api-docs", "Access the /doc endpoint for documentation on the API endpoints");
+        jsonObject.put("api-docs", "Access the /doc endpoint from a browser to read the API documentation");
         return ResponseEntity.ok(jsonObject);
     }
 
