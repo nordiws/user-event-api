@@ -30,6 +30,9 @@ public class UserService {
 
     public User updateUser(String userId, User user) {
         Optional<User> dbUser = userRepository.findById(userId);
+        if (user.getRegistrationDate() == null) {
+            user.setRegistrationDate(dbUser.get().getRegistrationDate());
+        }
         user.setId(dbUser.get().getId());
         return userRepository.save(user);
     }

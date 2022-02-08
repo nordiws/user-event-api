@@ -29,8 +29,8 @@ public class RabbitMQConfiguration {
     @Value("${rabbitmq.routing_key}")
     String routingKey;
 
-    @Value("${spring.rabbitmq.uri}")
-    String uriString;
+    @Value("${spring.rabbitmq.host}")
+    String host;
 
     @Value("${spring.rabbitmq.username}")
     String username;
@@ -61,7 +61,7 @@ public class RabbitMQConfiguration {
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
-        cachingConnectionFactory.setUri(uriString);
+        cachingConnectionFactory.setHost(host);
         cachingConnectionFactory.setUsername(username);
         cachingConnectionFactory.setPassword(password);
         return cachingConnectionFactory;
